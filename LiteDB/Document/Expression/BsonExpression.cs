@@ -358,23 +358,25 @@ namespace LiteDB
             // in both case, try use cached compiled version
             if (expr.IsScalar)
             {
-                var cached = _cacheScalar.GetOrAdd(expr.Source, s =>
-                {
+                //var cached = _cacheScalar.GetOrAdd(expr.Source, s =>
+                //{
                     var lambda = System.Linq.Expressions.Expression.Lambda<BsonExpressionScalarDelegate>(expr.Expression, context.Source, context.Root, context.Current, context.Collation, context.Parameters);
 
-                    return lambda.Compile();
-                });
+                //    return lambda.Compile();
+                //});
+                var cached = lambda.Compile();
 
                 expr._funcScalar = cached;
             }
             else
             {
-                var cached = _cacheEnumerable.GetOrAdd(expr.Source, s =>
-                {
+                //var cached = _cacheEnumerable.GetOrAdd(expr.Source, s =>
+                //{
                     var lambda = System.Linq.Expressions.Expression.Lambda<BsonExpressionEnumerableDelegate>(expr.Expression, context.Source, context.Root, context.Current, context.Collation, context.Parameters);
 
-                    return lambda.Compile();
-                });
+                //    return lambda.Compile();
+                //});
+                var cached = lambda.Compile();
 
                 expr._funcEnumerable = cached;
             }
